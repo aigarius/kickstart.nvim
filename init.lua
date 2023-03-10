@@ -407,17 +407,22 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  ansible = {},
-  bash = {},
-  css = {},
-  dockerfiles = {},
+  ansiblels = {},
+  bashls = {},
+  cssls = {},
+  dockerls = {},
+  docker_compose_language_service = {},
   html = {},
-  javascript = {},
-  markdown = {},
-  python = {},
-  sql = {},
-  yaml = {},
-  
+  pylsp = {
+        plugins = {
+        pycodestyle = {
+          ignore = {'W391'},
+          maxLineLength = 120,
+        }
+      }
+  },
+  yamlls = {},
+
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
