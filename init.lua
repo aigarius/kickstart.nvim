@@ -72,6 +72,9 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  'preservim/tagbar',
+  
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -247,8 +250,37 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 -- NeoTree keybinds
 --
-vim.keymap.set('n', '/', ':Neotree action=focus source=filesystem position=left toggle=false reveal=true<cr>')
-vim.keymap.set('n', '\\', ':Neotree action=focus source=buffers position=left toggle=false<cr>')
+vim.keymap.set('n', '<tab>', ':Neotree action=focus source=filesystem position=left toggle=false reveal=true<cr>')
+vim.keymap.set('n', '<S-tab>', ':Neotree action=focus source=buffers position=left toggle=false<cr>')
+
+-- Taglist
+--
+vim.keymap.set('n', '<F5>', ':TagbarToggle<CR>')
+
+-- Save
+--
+vim.keymap.set('n', '<F2>', ':update<CR>')
+vim.keymap.set('v', '<F2>', '<Esc><F2>')
+vim.keymap.set('i', '<F2>', '<c-o><F2>')
+
+
+-- Tab navigation
+--
+vim.keymap.set('n', '<leader>1', '1gt')
+vim.keymap.set('n', '<leader>2', '2gt')
+vim.keymap.set('n', '<leader>3', '3gt')
+vim.keymap.set('n', '<leader>4', '4gt')
+vim.keymap.set('n', '<leader>5', '5gt')
+vim.keymap.set('n', '<leader>6', '6gt')
+vim.keymap.set('n', '<leader>7', '7gt')
+vim.keymap.set('n', '<leader>8', '8gt')
+vim.keymap.set('n', '<leader>9', '9gt')
+vim.keymap.set('n', '-', ':tabprev<CR>')
+vim.keymap.set('n', '=', ':tabnext<CR>')
+vim.keymap.set('n', '+', ':tabnew<CR>')
+vim.keymap.set('n', '<C-Insert>', ':tabnew<CR>')
+vim.keymap.set('n', '<C-Delete>', ':tabclose<CR>')
+
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

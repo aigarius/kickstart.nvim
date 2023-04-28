@@ -15,6 +15,9 @@ return {
       open_on_setup_file = true,
       update_focused_file = true,
       sync_root_with_cwd = true,
+      use_libuv_file_watcher = true,
+      follow_current_file = true,
+      enable_git_status = true,
     }
   end,
 }
