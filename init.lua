@@ -200,6 +200,9 @@ require('lazy').setup({
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
+-- Set terminal title
+vim.o.title = true
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -261,7 +264,7 @@ vim.keymap.set('n', '<F5>', ':TagbarToggle<CR>')
 --
 vim.keymap.set('n', '<F2>', ':update<CR>')
 vim.keymap.set('v', '<F2>', '<Esc><F2>')
-vim.keymap.set('i', '<F2>', '<c-o><F2>')
+vim.keymap.set('i', '<F2>', '<Esc><F2>')
 
 
 -- Tab navigation
@@ -459,12 +462,16 @@ local servers = {
   pylsp = {
     plugins = {
       pycodestyle = {
-        ignore = { 'W391' },
+        ignore = { 'W391', 'W503', "E402" },
         maxLineLength = 120,
       }
     }
   },
-  yamlls = {},
+  yamlls = {
+    yaml = {
+      keyOrdering = false,
+    },
+  },
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -544,6 +551,40 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- Trim whitespace at end of line
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
+
+vim.api.nvim_create_autocmd({ "FocusLost" }, {
+  pattern = { "*" },
+  command = "silent! wall",
+  nested = true,
+})
+
+
+if vim.g.neovide then
+    -- Put anything you want to happen only in Neovide here
+    vim.o.guifont = "RobotoMono Nerd Font Mono:h12"
+end
+
+if vim.g.neovide then
+  vim.keymap.set('n', '<D-s>', ':w<CR>') -- Save
+  vim.keymap.set('v', '<D-c>', '"+y') -- Copy
+  vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
+  vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
+  vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+end
+
+-- Allow clipboard copy paste in neovim
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
